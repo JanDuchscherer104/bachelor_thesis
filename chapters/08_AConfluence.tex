@@ -1,0 +1,89 @@
+
+DNN trained on eigenvalues from full and subsampled covariance matrix
+HF external noise is no longer white Gaussian, what is the impact on the eigenvalues?
+Inputs: instead of generating a subsampled covariance matrix, use 3x3 full covariance matrices
+
+Sweep with test results (use existing studies)
+
+Computational Complexity of conventional methods
+Model Visualization
+
+
+Quantization \& Fixed Point
+Range of \#snapshots in real-lilfe?? possible input param or sets of weights??
+Data
+Define dataset config for training
+Distribution for number of signals
+
+
+Model
+Cost-function: Add weight decay, maybe some other regularization?
+Classification vs. Regression
+Evaluation of output and layer activation
+Batchsize - not too large!
+
+Data augmentation?
+Evaluation \& Testing
+
+Get computational complexity of the information criteria
+Further Metrics
+AccBreakdown vs. Param plot
+
+MISC
+Spatial smoothing??
+
+Question: Use of real world data recordings? What about labeling?
+
+Integrate Matlab functions from Demmel in Python Data Model
+
+Noise estimator integration
+
+
+
+Future Research \& Improvements
+
+
+Model Pruning Techniques
+
+Goal: Optimize architecture for computational efficiency without sacrificing performance.
+
+Challenges: Identification of neurons that can be pruned without impacting the network's efficacy.
+
+Method: Use criteria like weight values below a certain threshold or low output activations for pruning.
+
+Future Possibilities: Investigate more advanced pruning techniques.
+
+Adaptive Cost Functions via Auxiliary Network
+
+
+
+Future Possibilities: Consider reinforcement learning for alternative adaptive strategies.
+
+Inter-bin Relationships \& Multi-Frequency Dependencies
+
+Note: A long-term goal involving a comprehensive model that operates on a selected subset of frequency bins for MOE and DOAE.
+
+Goal: Investigate the relationship between features across different frequency bins.
+
+
+Future Possibilities: Integrate time-series handling elements like LSTMs or GRUs to capture time dependencies.
+
+Bias Handling via MUSIC Output
+
+Goal: Utilize MUSIC's output as an input feature to correct biases dynamically.
+
+Challenges: Dependence risk on MUSIC for model performance.
+
+Method: Form a recurrent loop between MOE, MUSIC quality metrics, and bias correction.
+
+Future Possibilities: Explore adversarial training for alternative bias-correction methods.
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,63 @@
+\subsection{Sub Array Sampling and Advanced Estimation Techniques}
+
+Explorations into Sparse Signal Representation (SSR) and Generalized Least Squares (GLS) estimation present promising
+avenues for handling coherent and incoherent signals with reduced computational costs. These methods, alongside Maximum
+Likelihood Estimation (MLE) variants, offer a nuanced approach to covariance matrix matching and signal representation,
+highlighting the potential for superior performance with efficient computational strategies.
+
+\subsection{Future Directions for Improvement}
+
+To address the complexities of coherent signal modeling, noise floor variations, and quantization effects, future work
+must adapt the data model and explore innovative solutions for capturing time dependencies and environmental variations.
+This includes extending the model to accurately represent coherent multi-path signals and integrating noise estimator
+mechanisms for a more comprehensive analysis.
+
+The outlined future directions underscore the need for continued innovation in covariance matrix-based DNNs, advanced
+estimation techniques, and data-driven approaches to meet the evolving challenges in signal processing and DoA estimation.
+As the field progresses, these efforts will pave the way for more accurate, efficient, and versatile estimation models,
+significantly advancing our capability to interpret and utilize complex signal environments.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\subsubsection{Optimized Training Data Utilization and Learning Strategy}
+\label{subsub:optimized_training_data_utilization}
+
+The use of synthetic data offers a unique advantage in training DNNs for signal processing tasks, allowing for the introduction of unseen data at each step of the training process. This approach eliminates the need for repetitive epochs traditionally required to achieve convergence, enabling a more dynamic and efficient learning process. However, the effectiveness of this strategy is contingent upon the careful management of the dataset size and the training methodology employed.
+
+\paragraph{Dynamic Data Generation and Epoch Stretching}
+Dynamic generation of synthetic data ensures that the neural network encounters a diverse set of scenarios in each training step, preventing overfitting and promoting robust generalization. To leverage the full potential of this approach:
+\begin{itemize}
+    \item \textbf{Incremental Learning:} Introduce unseen data continuously during the training process to simulate an infinite stream of scenarios. This method encourages the network to constantly adapt and refine its parameters.
+    \item \textbf{Epoch Stretching:} By extending the training over more epochs with dynamically generated data, we can effectively utilize learning rate schedulers. Gradually decreasing the learning rate over extended periods allows the network to explore the parameter space more thoroughly, settling into more stable and generalized solutions.
+\end{itemize}
+
+\paragraph{Batch Size Optimization}
+The choice of batch size significantly impacts the training dynamics. A smaller batch size can provide several benefits in the context of dynamic data generation:
+\begin{itemize}
+    \item \textbf{Enhanced Generalization:} Smaller batches promote noise in the gradient estimation, which can act as a regularizing effect, helping the model to generalize better to unseen data.
+    \item \textbf{Flexible Learning:} Smaller batches allow for more frequent updates, offering the model more opportunities to adjust its parameters in response to a wider variety of training samples.
+    \item \textbf{Computational Efficiency:} Reducing the batch size can lower memory requirements, enabling the training of larger models or the utilization of more complex synthetic data generation processes.
+\end{itemize}
+
+\paragraph{Implementation Considerations}
+The training infrastructure has been adapted to support the switching between datasets in the dataloader, facilitating the seamless introduction of new synthetic samples. This flexibility is crucial for implementing the proposed dynamic training approach, ensuring that the neural network benefits from continuous exposure to varied data throughout the training process.
+
+In summary, optimizing the training data utilization by embracing dynamic data generation and epoch stretching, coupled with strategic batch size selection, presents a promising approach to training DNNs for signal processing tasks. These strategies aim to enhance learning efficiency, encourage model generalization, and navigate the challenges associated with synthetic data training for complex estimation tasks.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Training Data}
+\label{subsub:training_data}
+\begin{itemize}
+    \item Since synthetic data is used, the NN can be trained with unseen data in every step without the need of multiple epochs.
+    \item The jump from epoch 1 to N gets insignificant for 1.2e6 samples so the train set should be a bit smaller.
+    \item Have already implemented the switching between datasets in the dataloader.
+\end{itemize}
+
+- use an even smaller batchsize for the training of a final model.
+- employ pruning techinques based on the utilization of the weights in the proposed networks.
+
+\subsection{Inclusion of Real World Data}
+- build an auxiliary network to learn a mapping from MUSICs quality metric, spectrum, number of snapshots, covariance matrix, eigenvalues,
+predicted model order, eigenvectors, measurement vector, calibrated array manifold to predict the model order but also
+DOA estimates.\\
+Train that auxiliary network, then inference the model on real-world data.

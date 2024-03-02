@@ -1,0 +1,137 @@
+%---------------------------------------------------------------------------
+%| Acronyms                                                                |
+%---------------------------------------------------------------------------
+\newacronym{aic}{AIC}{\textbf{A}kaike \textbf{I}nformation \textbf{C}riterion}
+% define new acronym: IC with correct plural form. singular: criterion (IC), plural: criteria (IC)
+\newacronym[shortplural={IC},longplural=\textbf{I}nformation \textbf{C}riteria]{ic}{IC}{\textbf{I}nformation \textbf{C}riterion}
+\newacronym{awgn}{AWGN}{\textbf{A}dditive \textbf{W}hite \textbf{G}aussian \textbf{N}oise}
+\newacronym{ddf}{DDF}{\textbf{D}igital \textbf{D}irection \textbf{F}inding}
+\newacronym{doa}{DoA}{\textbf{D}irection-\textbf{o}f-\textbf{A}rrival}
+\newacronym{dnn}{DNN}{\textbf{D}eep \textbf{N}eural \textbf{N}etwork}
+\newacronym{fft}{FFT}{\textbf{F}ast \textbf{F}ourier \textbf{T}ransform}
+\newacronym{map}{MAP}{\textbf{M}aximum \textbf{A} \textbf{P}osteriori}
+\newacronym{mdl}{MDL}{\textbf{M}inimum \textbf{D}escription \textbf{L}ength}
+\newacronym{eft}{EFT}{\textbf{E}xponential \textbf{F}itting \textbf{T}est}
+\newacronym{mle}{MLE}{\textbf{M}aximum \textbf{L}ikelihood \textbf{E}stimate}
+\newacronym{moe}{MOE}{\textbf{M}odel \textbf{O}rder \textbf{E}stimation}
+\newacronym{mse}{MSE}{\textbf{M}ean \textbf{S}quare \textbf{E}rror}
+\newacronym{music}{MuSiC}{\textbf{Mu}ltiple \textbf{Si}gnal \textbf{C}lassification}
+\newacronym{rmse}{RMSE}{\textbf{R}oot \textbf{M}ean \textbf{S}quare \textbf{E}rror}
+\newacronym{sir}{SIR}{\textbf{S}ignal to \textbf{I}nterference \textbf{R}atio}
+\newacronym{snr}{SNR}{\textbf{S}ignal to \textbf{N}oise \textbf{R}atio}
+\newacronym{uca}{UCA}{\textbf{U}niform \textbf{C}ircular \textbf{A}rray}
+\newacronym{esprit}{ESPRIT}{\textbf{E}stimation of \textbf{S}ignal \textbf{P}arameters via \textbf{R}otation \textbf{I}nvariance \textbf{T}echniques}
+\newacronym{cnn}{CNN}{\textbf{C}onvolutional \textbf{N}eural \textbf{N}etwork}
+\newacronym{rcnn}{RCNN}{\textbf{R}esidual \textbf{C}onvolutional \textbf{N}eural \textbf{N}etwork}
+\newacronym{mlp}{MLP}{\textbf{M}ulti-\textbf{L}ayer \textbf{P}erceptron}
+\newacronym{relu}{ReLU}{\textbf{Re}ctified \textbf{L}inear \textbf{U}nit}
+\newacronym{prelu}{PReLU}{\textbf{P}arametric \textbf{Re}ctified \textbf{L}inear \textbf{U}nit}
+\newacronym{elu}{ELU}{\textbf{E}xponential \textbf{L}inear \textbf{U}nit}
+\newacronym{rnn}{RNN}{\textbf{R}ecurrent \textbf{N}eural \textbf{N}etwork}
+\newacronym{gru}{GRU}{\textbf{G}ated \textbf{R}ecurrent \textbf{U}nit}
+\newacronym{lstm}{LSTM}{\textbf{L}ong \textbf{S}hort-\textbf{T}erm \textbf{M}emory}
+\newacronym{mac}{MAC}{\textbf{M}ultiply-\textbf{Ac}cumulate}
+\newacronym{pdf}{PDF}{\textbf{P}robability \textbf{D}ensity \textbf{F}unction}
+\newacronym{cdf}{CDF}{\textbf{C}umulative \textbf{D}istribution \textbf{F}unction}
+\newacronym{fpga}{FPGA}{\textbf{F}ield \textbf{P}rogrammable \textbf{G}ate \textbf{A}rray}
+\newacronym{bn}{BN}{\textbf{B}atch \textbf{N}ormalization}
+\newacronym{ln}{LN}{\textbf{L}ayer \textbf{N}ormalization}
+\newacronym{gn}{GN}{\textbf{G}roup \textbf{N}ormalization}
+\newacronym{in}{IN}{\textbf{I}nstance \textbf{N}ormalization}
+\newacronym{sml}{SML}{\textbf{S}tochastic \textbf{M}aximum \textbf{L}ikelihood}
+\newacronym{gls}{GLS}{\textbf{G}eneralized \textbf{L}east \textbf{S}quares}
+\newacronym{ssr}{SSR}{\textbf{S}parse \textbf{S}ignal \textbf{R}epresentation}
+
+
+%---------------------------------------------------------------------------
+%| Symbols                                                                 |
+%---------------------------------------------------------------------------
+
+% Signal Model
+\newGroup{Signal}{1}
+\newSym{DOAVec}{\bfm{\theta}}{Direction of Arrival}{\si{\radian}}{1}
+\newSym{poynting}{\bfm{S}}{Poynting vector}{\si{\watt\per\square\meter}}{1}
+\newSym{azim}{\azim}{Azimuth}{\si{\radian}}{1}
+\newSym{elevation}{\elev}{Elevation}{\si{\radian}}{1}
+\newSym{E}{\bfm{E}}{Electric field strength}{\si{\volt\per\meter}}{1}
+\newSym{B}{\bfm{B}}{Magnetic field strength}{\si{\tesla}}{1}
+\newSym{sEmit}{\widetilde{s}(t)}{Emitter signal}{\si{\micro\volt}}{1}
+\newSym{sBase}{s(t)}{Baseband signal}{\si{\micro\volt}}{1}
+\newSym{fCarrier}{f_C}{Carrier frequency}{\si{\hertz}}{1}
+\newSym{fBaseband}{f_B}{Highest frequency in the baseband}{\si{\hertz}}{1}
+
+
+% Antenna Model
+\newGroup{Antenna Array}{2}
+\newSym{cAnt}{c(\bfT, f_C)}{Directivity of antenna}{\si{}}{2}
+\newSym{dAnt}{d_{\text{Ant}}}{Diameter of the UCA}{\si{\meter}}{2}
+\newSym{lambdaC}{\lambda_C}{Wavelength of the carrier}{\si{\meter}}{2}
+\newSym{Mant}{M}{Total number of antennas}{\si{}}{2}
+\newSym{Aant}{A_m}{m-th Antenna in the array}{\si{}}{2}
+\newSym{Aref}{A_1}{Reference Antenna}{\si{}}{2}
+\newSym{D}{D}{Aperture of the UCA}{\si{}}{2}
+
+% Measurement Model
+\newGroup{Measurement}{3}
+\newSym{N}{N}{Number of incoming waves ~ the model order}{\si{}}{3}
+\newSym{nSnapshots}{K}{Number of snapshots}{\si{}}{3}
+\newSym{nAntPaths}{L}{Number of antenna paths}{\si{}}{3}
+\newSym{phiAnt}{\varphi_m}{Phase observed by antenna \( A_m \)}{\si{\radian}}{3}
+\newSym{tsamp}{T_s}{Sampling period}{\si{\second}}{3}
+\newSym{xmeas}{x_m[k]}{Measured voltage for the \( m \)-th antenna}{\si{\micro\volt}}{3}
+\newSym{deltaPhi}{\Delta\varphi_m}{Phase difference between the \( m \)-th antenna and the reference antenna}{\si{\radian}}{3}
+\newSym{etaNoise}{\bfm{\eta}}{Noise Vector, complex normal distribution}{\si{\micro\volt}}{3}
+\newSym{x}{\bfm{x}}{Measurement vector}{\si{\micro\volt}}{3}
+\newSym{bfmA}{\bfm{a}(\bfT)}{Steering vector representing the array's spatial response}{\si{}}{3}
+\newSym{mathfrakA}{\mathfrak{A}}{Array manifold function}{\si{}}{3}
+
+% General
+\newGroup{Subspaces}{4}
+\newSym{Csa}{\bfm{C}_s}{Signal covariance matrix}{\si{\micro\volt\squared}}{4}
+\newSym{Cx}{\widehat{\bfm{C}}_x}{Covariance matrix of the measurement vector (estimate)}{\si{\micro\volt\squared}}{4}
+\newSym{CSub}{\widehat{\bfm{C}}'_x }{Covariance matrix (sub-sampled)}{\si{\micro\volt\squared}}{4}
+\newSym{U}{\bfm{U}}{Unitary matrix of eigenvectors of \( \widehat{\bfm{C}}_x \)}{\si{}}{4}
+\newSym{signalSubspace}{\bfm{U}_s}{Signal subspace}{\si{\micro\volt\squared}}{4}
+\newSym{noiseSubspace}{\bfm{U}_\eta}{Noise subspace}{\si{\micro\volt\squared}}{4}
+\newSym{eigval}{\bfm{\lambda}}{Vector of eigenvalues of \( \widehat{\bfm{C}}_x \)}{\si{\micro\volt\squared}}{4}
+\newSym{varNoise}{\sigma_\eta^2}{Variance of the noise}{\si{\micro\volt\squared}}{4}
+\newSym{eigvalNoise}{\bfm{\lambda}_\eta}{Vector of noise eigenvalues}{\si{\micro\volt\squared}}{4}
+\newSym{eigvalSignal}{\bfm{\lambda}_s}{Vector of signal eigenvalues}{\si{\micro\volt\squared}}{4}
+
+\newGroup{MuSiC}{5}
+\newSym{Pmusic}{\widehat{\bfm{P}}_{\text{MuSiC}}}{Pseudo-spectrum of the MuSiC algorithm (estimate)}{\si{}}{5}
+\newSym{QMusic}{\bfm{Q}_{\text{MuSiC}}}{Quality of the DoA estimates}{\si{}}{5}
+
+% Model Order Estimation
+\newGroup{MOE}{6}
+\newSym{NPred}{\widehat{N}}{Predicted number of incoming waves}{\si{}}{6}
+\newSym{NSet}{\NSet}{Set of possible model orders}{\si{}}{6}
+\newSym{n}{n}{Eigenvalue index - candidate model order (positive increment)}{\si{}}{6}
+\newSym{p}{p}{Eigenvalue index - candidate noise subspace dimension (negative increment)}{\si{}}{6}
+\newSym{q}{q}{Decay coefficient of the EFT}{\si{}}{6}
+\newSym{eftRelEft}{\bfm{\epsilon}}{Relative errors of the EFT}{\si{}}{6}
+\newSym{eftTresh}{\bfm{\tau}}{Vector of thresholds for the EFT}{\si{}}{6}
+
+% Deep Learning
+\newGroup{Deep Learning}{7}
+\newSym{DTrain}{\DTrain}{Training dataset}{\si{}}{7}
+\newSym{DVal}{\DVal}{Validation dataset}{\si{}}{7}
+\newSym{DTest}{\DTest}{Test dataset}{\si{}}{7}
+\newSym{LossA}{\loss}{Loss function}{\si{}}{7}
+\newSym{LossMeanTrain}{\meanLossTrain}{Mean loss on the training dataset equivalent for `val' and `test'}{\si{}}{7}
+\newSym{LossCE}{\lossCETrain}{Cross-entropy loss on the training dataset}{\si{}}{7}
+\newSym{LossMSE}{\lossMSETrain}{Mean squared error loss on the training dataset}{\si{}}{7}
+\newSym{Acc}{\Acc}{Accuracy}{\si{}}{7}
+\newSym{AccMeanVal}{\meanAccVal}{Mean accuracy on the val dataset-equivalent for ``test''}{\si{}}{7}
+\newSym{BatchSize}{\B}{Batch size}{\si{}}{7}
+\newSym{EigvalTensor}{\bfLT}{Tensor of eigenvalues}{\si{}}{7}
+\newSym{Logits}{\boldsymbol{Z}}{Tensor of logits}{\si{}}{7}
+\newSym{TrueOneHot}{\dot{\bfm{Y}}}{Tensor of one-hot encoded labels}{\si{}}{7}
+% Operators
+\newGroup{Operators}{8}
+\newSym{Exp}{\mathbb{E}[\bullet]}{Expectation operator}{\si{}}{8}
+\newSym{hermitian}{\bullet^H}{Hermitian transposed}{\si{}}{8}
+\newSym{estim}{\widehat{\bullet}}{Estimate of \( \bullet \)}{\si{}}{8}
+\newSym{nint}{\nint{\bullet}}{Nearest integer}{\si{}}{8}
+\newSym{elementwise}{\bullet_A \odot{} \bullet_B}{Elementwise multiplication}{\si{}}{8}
+

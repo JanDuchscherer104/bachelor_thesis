@@ -1,0 +1,25 @@
+\chapter{Model Exploration}
+\label{ch:model_exploration}
+
+\section{Introduction}
+
+This chapter aims to outline the exploration of the inspected model and hyperparameter space.
+The selection of the most appropriate form of input data forms the cornerstone of this exploratory process.
+Subsequently, the chapter delves into the potential preprocessing steps that can be applied to the input data to increase
+its suitability as input to \glspl{dnn}.\\
+The chapter then extends to the architectural design choices of the models. The considered architectures are
+variations of the classical dense, convolutional, and recurrent neural networks.
+The \gls{cnn} and \gls{rnn} based models will be explored in more detail than the \gls{mlp} architecture, as they provide
+each provide unique advantages for the task at hand, whereas the \gls{mlp} mostly serves as a baseline model.\\
+A comparative analysis of the different model architectures among themselves and with the previously introduced algorithms
+will then be conducted in~\autoref{ch:evaluation_results}.
+
+\input{chapters/06_1InputData.tex}
+
+\input{chapters/06_2Task.tex}
+\input{chapters/06_4CNN.tex}
+\input{chapters/06_3MLP.tex}
+\input{chapters/06_5RNN.tex}
+
+
+% END OF CHAPTER 6

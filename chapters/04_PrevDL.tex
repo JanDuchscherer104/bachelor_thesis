@@ -1,0 +1,53 @@
+\chapter{Advancements in MOE using ML and DL Approaches}
+\label{chap:prev_works_moe_ml_dl}
+
+\section{Introduction}
+\gls{moe} serves as a cornerstone in applications like \gls{doa} estimation. This chapter offers a dual perspective:
+an overarching view of machine learning and \gls{dnn} techniques in \gls{moe}, and a deep dive into the ChainNet
+approach, a paradigm-shifting methodology in the field~\cite{barthelme2022chainnet}.
+
+\section{Machine Learning and DNNs in MOE}
+
+\subsection{The Rise of Neural Networks}
+\gls{dnn}, particularly neural networks, have revolutionized \gls{moe} by capturing complex data relationships.
+These networks have demonstrated superior performance, especially in low \gls{snr} conditions~\cite{barthelme2020}.
+
+\subsection{Hybrid Methodologies}
+Innovative works have merged neural networks with classical algorithms, achieving enhanced performance. For example,
+neural network-based initialization coupled with model-based gradient steps has yielded competitive \gls{doa}
+estimates~\cite{bialer2019performanceCHECK}.
+
+\subsection{Adaptive Learning}
+Online training mechanisms enable neural networks to adapt to real-world imperfections in antenna arrays, thereby
+potentially obviating the need for manual calibration~\cite{barthelme2020}.
+
+\section{The ChainNet Paradigm}
+
+\subsection{Theoretical Underpinnings}
+ChainNet approximates the Maximum A Posteriori (MAP) estimator through a multi-stage classification chain. Each stage
+refines the \gls{doa} estimates, leveraging prior information from preceding stages.
+
+\subsection{Benchmarking Performance}
+ChainNet has been pitted against other machine learning-based methods such as SPICE + ML, \gls{music} + ML, and MCENet
++ ML, consistently outperforming them in terms of \gls{rmspe} across varying \gls{snr}s.
+
+\subsection{Strengths and Weaknesses}
+ChainNet excels in robustness and accuracy. However, its performance may wane when dealing with correlated sources.
+
+% \section{Comparative Metrics}
+% \begin{table}[h]
+%     \centering
+%     \begin{tabular}{c c c}
+%         \toprule
+%         Method         & Overall Accuracy & \gls{rmspe}    \\
+%         \midrule
+%         Neural Network & 97.25\%          & [Insert Value] \\
+%         \midrule
+%         ChainNet       & [Insert Value]   & [Insert Value] \\
+%         \bottomrule
+%     \end{tabular}
+%     \caption{Comparative Metrics of \gls{moe} Methods}
+% \end{table}
+
+\section{Conclusion and Future Directions}
+Machine learning, with neural networks and specialized frameworks like ChainNet at the forefront, is poised to redefine \gls{moe}. Future research avenues include architectural optimization, methodological diversification, and robustness assessments.

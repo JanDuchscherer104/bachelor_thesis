@@ -1,0 +1,61 @@
+\chapter{Model Order Estimation}
+\label{ch:ModelOrderEstimation}
+
+\section{Introduction}
+Model selection is a pivotal area in statistical analysis and signal processing, focusing on selecting the optimal model from a set of potential models based on specific criteria or metrics~\cite{costa}.
+Within this context, model order estimation (MOE) seeks to ascertain the best number of parameters or components to fit a model to a particular dataset~\cite{barthelme2020}.
+Traditional MOE methods, known as \glspl{ic}, endeavor to strike a balance between a model's fit to the data and its inherent complexity.
+
+\subsubsection*{MOE in DOA Scenarios}
+In \glsfirst{doa} scenarios, MOE is concerned with discerning the count of incident far-field wave-fronts that simultaneously impact an antenna array like a UCA. This step is pivotal for DOA estimation as it aids in choosing the most plausible signal model from a range of candidates~\cite{barthelme2020}.
+As highlighted in Section~\ref{sec:sub:subspaces}, the model order \( N \) corresponds to the rank of the signal subspace \( \mathbb{U}_S \), assuming all \( N \) incoming signals are uncorrelated and thus linearly independent. Notably, super-resolution algorithms such as \gls{music}, elaborated upon in the preceding chapter, hinge on an accurate model order estimate \( \NPred \) for effective subspace decomposition and separation using the sub-sampled covariance matrix \( \Csub \).
+
+\subsubsection*{Factors Influencing MOE}
+This thesis's MOE methods largely pivot on the distribution of eigenvalues. Factors like Signal-to-Noise Ratio (\textit{SNR}), finite-sample effects (especially when \( K < 10M \)), and modeling errors are integral to MOE considerations.
+
+Let \( \NSet \coloneqq \{1, \ldots, N_{\max}\} \), where \( N_{\max} = M - 1\) represents the maximum possible number of incoming signals, denote the potential model orders for ease of reference.
+
+\section{Classical Information Criteria}
+Both the \gls{aic} and the \gls{mdl} are time-honored \glspl{ic} commonly employed for MOE.
+Their primary merit lies in their computational efficiency, a result of offering closed-form solutions for MOE based on the covariance matrix's eigenvalues~\cite{barthelme2020}.
+
+Central to both criteria is the ratio between the arithmetic mean \( \am(\bfL_n) \) and the geometric mean \( \gm(\bfL_n) \) of the \( M - n \) smallest eigenvalues. The arithmetic mean derives from the eigenvalues \( \lambda_i \) for \( i \) values ranging from \( M-n+1 \) to \( M \) in the sorted vector \( \bfm{\lambda} \). It is expressed as~\cite{trees.ch7}:
+\begin{equation}
+    \am(\bfL_n) \coloneqq \frac{1}{M-n} \sum_{i=n+1}^{M} \lambda_i
+\end{equation}
+
+The geometric mean for these eigenvalues is:
+\begin{equation}
+    \gm(\bfL_n) \coloneqq \sqrt[M-n]{\prod_{i=n+1}^{M} \lambda_i}
+\end{equation}
+
+The geometric mean is a measure of central tendency using the product of values. In the context of MOE, the ratio of the arithmetic to the geometric mean represents the likelihood ratio between two hypotheses. Specifically, this ratio evaluates the likelihood of the hypothesis that the (M - n) smallest eigenvalues are equal against the hypothesis that only the (M - n - 1) smallest eigenvalues are equal~\cite{trees.ch7}.
+
+<revise>
+\subsubsection{Akaike Information Criterion (AIC)}
+
+For each potential model order \(n \in \widehat{\mathbb{N}} \), the AIC criterion \( \mathrm{AIC}_n \) can be represented as:
+\begin{equation}
+    \bfm{\mathrm{AIC}}[n] = K (M-n) \cdot \ln \left(\frac{\am(\bfL_n)}{\gm(\bfL_n)}\right) \quad \text{for each } n \in \NSet
+    \label{eq:AIC}
+\end{equation}
+
+Following our previous notation, \( M \) denotes the number of antennas, \( K \) the snapshot count, and \( \lambda_i \) the \( i \)-th eigenvalue of the (sub-sampled) covariance matrix \( \CSub \). The estimated model order is then:
+\begin{equation}
+    \NPred_\mathrm{AIC}=\underset{n \in \mathbb{N}}{\operatorname{argmin}}\{ \bfm{\mathrm{AIC}}[n] \}
+    \label{eq:AIC_argmin}
+\end{equation}
+
+\subsubsection{Minimum Description Length (MDL)}
+
+The MDL criterion is formulated as:
+\begin{equation}
+    \mathrm{MDL}_n=-\ln \left(\frac{\prod_{i=n+1}^M \lambda_i^{1 /(M-n)}}{\frac{1}{M-n} \sum_{i=n+1}^M \lambda_i}\right)+\underbrace{\frac{1}{2} n(2 M-n) \ln (K)}_{\text{Regularization term}}
+    \label{eq:MDL}
+\end{equation}
+
+Similar to AIC, the MDL-based model order \( \NPred_\mathrm{MDL} \) can be determined using:
+\begin{equation}
+    \NPred_\mathrm{MDL}=\underset{n \in \mathbb{N}}{\operatorname{argmin}}\{ \mathrm{MDL}_n \}
+\end{equation}
+</revise>

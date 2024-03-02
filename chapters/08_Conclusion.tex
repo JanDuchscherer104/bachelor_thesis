@@ -1,0 +1,262 @@
+
+\chapter{Conclusion \& Outlook}
+\label{ch:conclusion_outlook}
+
+\section{Considerations on the feasibility of eigenvalue based methods}
+Considering the evidence collected in the previous chapter, it seems clear that eigenvalue based methods for \gls{moe}
+lose their applicability when the model order exceeds the number of RF-paths in a sub-sampled \gls{ddf} system.
+- it is unlikely that \gls{music} would perform adequately, even if the model order was estimated correctly, given that
+the entire subspace decomposition loses its theoretical soundness.
+- scenarios with \( N > L \) might be unlikely in practise, hence the
+The overall low bias of the neural networks, can be considered as a strong indicator that improvement could if only be achieved
+though the application of models with even lower complexity. This statement however conflicts with the fact that the model
+architectures are the results of extensive hyperparameter optimizations; simpler models generally performed worse than
+the selected architectures. \\
+This contradiction solidifies the assertion that the eigenvalue based
+
+
+% \end{enumerate}
+
+
+
+\subsubsection{Replacement of the MDL}
+Considering the \gls{mdl}'s underwhelming performance and strong bias for underestimation even for \( 2 \leq N \leq 3 \),
+a replacement of the \gls{mdl} with a more reliable \gls{moe} method should be considered for employment in sub-sampled \gls{ddf}
+systems as a mid-term goal. \\
+
+
+
+
+
+\section{Conclusion on the EFT}
+
+The \gls{eft} marks a paradigmatic advancement in \gls{moe}, and provides a systematic approach in maintaining a balance
+between false positive and negative rates.
+This is achieved through careful threshold adjustments and by directly identifying a gap between the signal and noise eigenvalues. \\
+Unlike traditional parameter-free \glspl{ic}, the \gls{eft} effectively controls bias, preventing over- or underestimation.
+However, this advantage comes at the cost of an increased sensitivity to noise and single eigenvalues. \\
+Future work should aim to enhance the precision of the \gls{eft} by focusing on the optimization process. This process
+should consider both the balance between false positive and negative rates and the overall performance of the estimator,
+as well as mitigating the increased checking frequency of higher-index eigenvalues.
+
+The \gls{eft}'s computational efficiency, notably superior to the \gls{aic} and \gls{mdl}, is highlighted by its minimal
+runtime computations. However, it is noteworthy that all estimators require an eigenvalue decomposition, which overshadows
+the subsequent computations in terms of complexity.
+
+Despite its efficacy with incoherent sources, the original \gls{eft} as proposed in~\cite{eft}, is not applicable to scenarios
+with coherent sources or multipath interference. % TODO: is this a limitation of all eigenvalue-based methods?
+
+Implementation challenges, particularly the ambiguity in calculating the decay coefficient \( q \) and estimating the noise
+variance, underscore the necessity for further research and optimization of the \gls{eft}.
+
+\subsubsection{Future Improvements of the EFT}
+In essence, the \gls{eft} offers a promising approach to \gls{moe} through careful threshold optimization and bias control.
+Future research should not only aim to optimize threshold values and clarify implementation methods but also explore the
+proposed modifications to the \gls{eft} in~\cite{costa2007} and~\cite{costa2009}. \\
+The changes suggested in~\cite{costa2007} consider the iterative estimation of the noise variance \( \hat{\sigma}^2_{\eta} \).
+They proposed a solution for the aforementioned ambiguity, by estimating \( \hat{\sigma}^2_{\eta} \) from the set of the
+\( p \) smallest eigenvalues as per~\autoref{eq:eft_predicted_eigenvalue_corrected}, instead of the \( p + 1 \) smallest eigenvalues
+as denoted in~\autoref{eq:eft_predicted_eigenvalue}.
+
+\begin{equation}
+    \hat{\lambda}_{M-p} = \gnbxeq{(P+1)}\frac{1 - q(\gnbxeq{P+1}, K)}{1 - {q(\gnbxeq{P+1}, K)}^{p + 1}} \cdot \gnbxeq{\frac{1}{p}}\sum_{i=0}^{\gnbxeq{p-1}}\lambda_{M-i}
+    \label{eq:eft_predicted_eigenvalue_corrected}
+\end{equation}
+
+All changes to~\autoref{eq:eft_predicted_eigenvalue} as formalized in~\autoref{eq:eft_predicted_eigenvalue_corrected} are
+encapsulated in green boxes.
+
+Moreover,~\cite{costa2007} computed the decay coefficients \( q \) based on the value of the respective candidate noise
+subspace dimension \( p \), using \( q(p+1, K) \) instead of \( q(M, K) \).
+This adjustment can be implemented by replacing \( M \) with \( p+1 \) in~\autoref{eq:eft_decay_coefficient}. \\
+However, this modification does not align with our observations that the decay coefficients \( q(p+1, K) \)
+lead to rather unexpected exponential eigenvalue profiles, as illustrated in~\autoref{fig:eft_coeff_comparison}.
+
+Another noteworthy modification proposed in~\cite{costa2009} is the calculation of the \gls{eft}'s thresholds.
+The authors proposed that the thresholds \( \bfm{\tau} \) should be calculated based on the conditional probability of false
+alarm as \( \Pr_{\text{fa}}(p) = \Pr(\widetilde{\mathcal{H}}_{p+1}| \mathcal{H}_2, \ldots, \mathcal{H}_p) \), which expresses
+the probability of detecting a signal for the \( (M - p - 1) \)-th
+eigenvalue conditioned on the fact that the smallest \( p \) eigenvalues are correctly identified as noise.
+
+In addition to these modifications,~\cite{costa2007} proposed to employ forward-backward smoothing as a pre-processing step to cope with limited
+numbers of snapshots \( K \) by virtually doubling the number of available snapshots without sacrificing array aperture.
+\begin{equation}
+    \bfm{Z}= \left[\begin{array}{ll} \mathbf{X} & \mathbf{\Pi}_M \mathbf{X}^+ \mathbf{\Pi}_K\end{array}\right], \quad \bfm{X} \in \mathbb{C}^{M \times K}, \:\bfm{Z} \in \mathbb{C}^{M \times 2 K}
+\end{equation}
+
+In this equation, \( \Pi_n \) denotes the \(n \times n \) exchange matrix, which contains ones on its anti-diagonal and
+zeros elsewhere.~\( \bfm{X} \) refers to the measurement matrix as defined in~\autoref{eq:MeasMatSingle}, and \( \bullet^+ \)
+signifies the Moore-Penrose pseudo inverse of \( \bullet \).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusion on the Explored DNNs}
+Various forms of input data and preprocessing strategies have been considered in the context of this thesis.
+Without considerations with respect to the theoretical soundness of the subspace decomposition, the eigenvalues \( \bfL \)
+emerged as the most suitable input, offering an optimal balance between information encapsulation and computational
+feasibility.
+
+The thesis provided insights into numerous architectural nuances of the three explored \glspl{dnn} and their impact on
+model performance and computational cost.
+
+The \glspl{cnn} have demonstrated balanced and robust performance, highlighting the effects of normalization layers
+on model generalization and the advantages of \gls{prelu} over \gls{relu} activations. \\
+Their performance and training dynamics might be improved by employing residual connections, bypassing the
+\( \{\texttt{Conv1D} \rightarrow \texttt{BatchNorm1D} \rightarrow \texttt{PReLU}\} \) layers, which might provide
+some gain without increasing the model's complexity prohibitively. This is of course only possible, for layers whose
+number of output channels matches the number of input channels. \\
+
+The exploration of \glspl{mlp} has underscored the importance of model depth in capturing essential features and the potential
+efficacy of simple architectural features such as the \gls{mlp}'s skip connections.
+The feed forward model has shown the worst performance among the explored models, as well as the strongest susceptibility
+to overfitting, but has had slight disadvantages during training and evaluation, as was pointed out in~\autoref{sec:mlp}. \\
+
+The recurrent neural networks have shown the most promising results and have the highest potential for improvement.\\
+The best overall accuracy has been achieved by a \gls{gru} based \gls{rnn} with a mostly unexplored hyperparameter space.
+The \glspl{rnn}' suitability for \gls{fpga} implementations due to their low parameter count, which emerges from their
+parameter sharing over time, has been highlighted. \\
+The implementations of the bidirectional \glspl{rnn} forward the outputs of each time step to the subsequent fully connected
+layer for the final classification, which presumably results in a reduced information density in the feed forward layer's input.
+This, supposedly, should allow easy pruning of the network by removing the least significant connections in the final layer or
+by forwarding only a selection of the output neurons to the final layer. \\
+
+
+The low variance in the performances of the different neural networks implies that any further improvement would come
+at a substantial cost. This implies that subsequent optimization efforts should be focused on reducing the complexities
+of the models while maintaining their performance, rather than on improving their performance.
+
+The performance evaluation further revealed relatively high variances in the models' performance, indicating that the challenges
+in eigenvalue-based \gls{moe} extend beyond overfitting, implicating the intrinsic limitations of input data in encoding
+the coveted model order information.
+
+
+\paragraph{Outlook}
+Looking ahead, the study suggests several critical areas for future research to further harness the capabilities of DNNs
+in model order estimation:
+\begin{itemize}
+    \item Optimizing regularization strategies, including dropout and L2 regularization, to refine their application for
+    improved model generalization and overfitting mitigation.
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Outlook on Improvements to the Data Model}
+\subsubsection{Multi-Path Propagation}
+The inclusion of coherent signals into the data model would provide a valuable enhancement to generate a greater variety
+of possible signal scenarios. This would further close the gap between reality and simulation environment and would allow
+future deep learning models to learn more features with relevance in practical applications.
+
+\subsubsection{Noise Floor}
+The utilized Python environment does currently not support varying noise floors and introduces randomness in terms of magnitues
+only through the \glspl{snr}. Considering the strong
+relation between the noise floor and the behavior of the eigenvalues, this feature should be considered as a future extension.
+
+\subsubsection{Varying Numbers of Snapshots}
+Including \( K \) as a new possible parameter into the Mote-Carlo simulation, which is being used to generate the datasets,
+instead of generating datasets with varying numbers of snapshots, such as \( \DKvar \), instead of wrapping the modules
+for dataset generation and performing a sweep over \( K \) followed by a subsequent concatenation of the data-frames, should
+be considered to improve reproducibility.
+
+\section{Outlook on Covariance Matrix-based DNNs}
+
+Future research should focus on developing covariance matrix-based networks specifically tailored for both \gls{moe} and
+\gls{doa} estimation in \gls{ddf} systems with sub-array sampling. \\
+These networks should utilize the \( J \) sub-array covariance matrices \( \C^{j} \in \mathbb{C}^{L \times L} \) as input data,
+aiming to leverage intrinsic dependencies between sub-arrays and mitigating information loss due to the sub-sampling process
+as formulated in~\autoref{eq:sub_sampled_covmat}. \\
+\begin{equation}
+    \bfm{\Gamma} \in \mathbb{R}^{\B \times J  \times 2 \times \frac{L(L+1)}{2}}
+    \label{eq:cov_tensor1}
+\end{equation}
+
+The tensor \( \bfm{\Gamma} \) in~\autoref{eq:cov_tensor1} represents the structure of the input data. \\
+The first dimension corresponds to the batch size \( B \).
+The second dimension corresponds to each of the \( J \) sub-array covariance matrices.
+The tensor has two channels for the real and imaginary parts of the covariance matrices --
+\( \left[ \Re\{\bullet\} \; \Im\{\bullet\} \right] \).
+Lastly, the elements from the upper triangle and diagonal of the \(L \times L\) covariance matrices are extracted to reduce redundancy -- \( \bfm{C}_{ij} = \bfm{C}_{ji} \).
+This preprocessing step aims to reduce the networks' complexity and proneness to overfitting but comes at the cost of yielding
+a tensor which does not exhibit a rectangular shape anymore. Utilizing convolutional layers in the initial layers of the network architecture
+would thus require padding. Nonetheless, the resulting heterogeneous information distribution might also be rather non-ideal. \\
+Reshaping the reduced spatial dimension into a rectangular shape would be another option; however,
+this would corrupt the spatial correlation within the covariance matrices. \\
+Hence, various strategies for handling the input data should be explored. \\
+Additionally, these networks could be extended to utilize the covariance matrices from all \( K \) snapshots, thus providing
+a more comprehensive representation of the signal environment by capturing temporal dependencies and mitigating the negative
+effects arising from averaging over the snapshots. \\
+
+\begin{equation}
+    \bfm{\Gamma}' \in \mathbb{R}^{\B \times K \times J \cdot 2 \cdot \frac{L(L+1)}{2}}
+    \label{eq:cov_tensor2}
+\end{equation}
+
+The tensor \( \bfm{\Gamma}' \) in~\autoref{eq:cov_tensor2} could be input into a recurrent neural network, treating
+the second dimension as the temporal dimension and \( J \cdot 2 \cdot \frac{L(L+1)}{2} \) as the input size of the
+recurrent layer. \\
+A data representation that adheres to the different dimensions as per~\autoref{eq:cov_tensor1} might be more appropriate
+for the task at hand and should be able to better leverage weight sharing, but it would not be compatible with standard recurrent layers.\\
+To overcome this, it would be beneficial to investigate the effectiveness of initial convolutional layers, perhaps using
+asymmetric convolutional kernels, such as \( 1 \times 3 \) and \( 3 \times 1 \), spanning over the \( J \cdot 2 \) input
+channels of the reduced and padded or ``full'' \( L \times L \) covariance matrices. \\
+Alternatively, the dimension accounting for the different sub-arrays could be treated independently, and the
+results could then be concatenated -- the kernels would only extend over \( 2 \) input channels.
+
+Considering the increased complexity of the data, the complexity, and sophistication of potential \glspl{dnn}, would have to
+be scaled accordingly to allow a sufficient feature extraction and subsequent prediction. \\
+Given that the entirety of the coveted information for both \gls{doa} estimation and \gls{moe} can be extracted from the individual sub-array covariance matrices
+\( \C^{j<k>} \), it would be worthwhile to consider networks whose task is not only model order estimation, but also \gls{doa}
+estimation. \\
+This could be achieved by utilizing a mutual backbone for feature extraction, followed by two distinct networks for
+the distinct tasks. The model order estimate might then be embedded in the \gls{doa} estimation network.
+
+Other potential forms of input data could be explored:
+\begin{itemize}
+    \item The number of snapshots \( K \) could allow application of the same network and weights to scenarios with different numbers of snapshots.
+    \item The estimated noise variance \( \hat{\sigma}^2_{\eta} \) could provide useful information to the network.
+\end{itemize}
+
+
+\section{Outlook: Optimized Training Data Utilization}
+\label{subsub:optimized_training_data_utilization}
+Training the final models on the \(\num{1.2e6}\) samples from \( \DMain_{(\text{train})} \) with a batch size
+\( \B = 512 \) revealed suboptimal training dynamics.
+Through the high cardinality of the training set, most models managed to achieve most of their training progress in the first epoch,
+whereas the subsequent epochs yielded only marginal performance improvements.\\
+
+The use of synthetic data offers a unique advantage in training \glspl{dnn}, allowing for the continuous
+introduction of previously unseen data throughout the training process.
+This approach eliminates the need for repetitive epochs traditionally required to achieve convergence, enabling a more
+dynamic and efficient learning process. \\
+However, distributing the training data across multiple ``epochs'' could allow for the effective use of learning rate
+schedulers and other validation-based callbacks, such as early stopping. Such a strategy would enable a more nuanced
+exploration of the parameter space, potentially leading to more robust and generalizable model performance.
+Moreover, the employment of normalization layers independent of batch size, coupled with a reduction in batch size, might
+synergize to enhance the model's learning process.
+Smaller batch sizes introduce variability in the gradient estimations, acting as a form of regularization that can
+inadvertently aid in better generalization to unseen data by preventing the model from learning noise present in the
+training set too meticulously. \\
+Additionally, smaller batches facilitate more frequent updates to the model's parameters, granting it numerous opportunities
+to adjust and refine its learning based on a broader spectrum of data instances within the training set.
+
+
+\section{Outlook: Utilization of Real-World Data}
+The generalizability of the introduced deep learning methodologies to real-world scenarios warrants thorough investigation.
+Currently, the absence of labeled real-world datasets poses a significant challenge to validating the practical applicability
+of the methods presented in this thesis. \\
+Furthermore, exploring the real-world relevance of the thesis's findings, including the
+impact of \gls{snr} on \gls{moe} performance, as well as yet unexplored effects of limited resolutions and
+the use of fixed-point arithmetic, are essential for the development of reliable and accurate \gls{moe} methodologies.
+
+Exploring auxiliary \gls{moe} techniques that remain theoretically sound in sub-sampled contexts where the model order
+surpasses the number of available RF-paths could pave the way for their application in analyzing recorded real-world data for
+\gls{doa} estimation and model order determination. \\
+These predictions of these presumably more complex methods could be performed in post-processing, thus allowing the acquisition
+of ``labeled'' real-world data in a semi-supervised manner. \\
+Possible methods are the conventional \gls{mle}, as well as more sophisticated methods such as the \gls{sml}, \gls{gls}, or
+\gls{ssr} methods. \\
+The subsequent development of auxiliary deep learning models such as transformer-based networks, which could be trained on synthetic data
+and real-world data, labeled by the aforementioned methods, could provide a powerful tool for generating real-world datasets
+with higher-quality labels. \\
+The eventual acquisition of labeled real-world data, where the signal model is truly known a priori, could then be utilized
+for testing these auxiliary methods. \\
+These computational expensive methods could than be used to generate significantly larger datasets for training and testing
+of more complex \glspl{dnn}.

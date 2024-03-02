@@ -1,0 +1,141 @@
+\documentclass{template}
+
+%---------------------------------------------------------------------------
+%| Text Substitutions                                                      |
+%---------------------------------------------------------------------------
+\company{Rohde \& Schwarz GmbH \& Co. KG}
+\university{Munich University of Applied Sciences}
+\universityGer{Hochschule München}
+\documentType{Bachelor Thesis}
+\authorName{Jan Duchscherer}
+\startDate{August 1, 2023}
+\submissionDate{March 2, 2023}
+\uniAdvisor{Prof.\ Dr.\ Arne Striegler}
+\compAdvisor{Dr.\ Karin\ Hedman}
+\uniDepartment{Department for Electrical Engineering and Information Technology}
+\uniDepartmentGer{Fakultät für Elektrotechnik und Informationstechnik}
+\compDepartment{8DSHC}
+\thesisTitle{Estimating the Number of Impinging Waves by means of Deep Learning}
+\thesisTitleGer{Schätzung der Anzahl einfallender Wellen mittels Deep Learning}
+\thesisNumber{2394}
+
+%----------------------------------------------------------------------------------------------------------
+%| BEGIN DOCUMENT                                                                                        |
+%----------------------------------------------------------------------------------------------------------
+\begin{document}
+
+\onehalfspacing{}
+\pagenumbering{gobble}
+\input{appendices/D_Glossaries.tex}
+
+%---------------------------------------------------------------------------
+%| COVER PAGE                                                               |
+%---------------------------------------------------------------------------
+\MakeFrontCover{}
+
+%---------------------------------------------------------------------------
+%| FRONT MATTER                                                             |
+%---------------------------------------------------------------------------
+%\input{chapters/B_FirstPage.tex}
+\input{appendices/B_AuthorDeclaration.tex}
+\input{appendices/C_Acknowledgements.tex}
+\normalsize
+% \input{chapters/00_Abstract.tex}
+\inputNoHead{chapters/00_Abstract.tex}
+\MakeGlossary{}
+\glsresetall{}
+\cleardoublepage{}
+
+%---------------------------------------------------------------------------
+%| TABLE OF CONTENTS                                                        |
+%---------------------------------------------------------------------------
+\clearpage
+\ofoot{\pagemark}
+\footnotesize
+\pagenumbering{roman}
+\pagestyle{scrheadings}
+\tableofcontents
+
+%+---------------------------------------------------------------------------+
+%| MAIN chapters                                                             |
+%+---------------------------------------------------------------------------+
+\clearpage
+\ofoot{\pagemark}
+\setcounter{secnumdepth}{2}
+\normalsize
+\pagenumbering{arabic}
+\cleardoublepage{}
+
+%--------------------------------------------
+%| INCLUDE chapters                         |
+%--------------------------------------------
+\input{chapters/01_Introduction.tex}
+\input{chapters/02_SignalModel.tex}
+\input{chapters/03_SuperResolutionAlgorithms.tex}
+\input{chapters/05_Dataset.tex}
+
+\input{chapters/04_0ModelOrderEstimation.tex}
+% \input{chapters/05_ModelOrderEstimationDL.tex}
+\input{chapters/06_0ModelExploration.tex}
+\input{chapters/07_EvaluationResults.tex}
+\input{chapters/08_Conclusion.tex}
+% \input{chapters/09_Outlook.tex}
+%--------------------------------------------
+
+% \input{chapters/07_Methodology.tex}
+% \chapter{Methodology}
+% \section{PyTorch Lightning Framework}
+% \section{Custom Metrics}
+
+% % \input{chapters/08_AnalysisOfEigenvalues.tex}
+% \chapter{Analysis of Eigenvalues}
+% \section{Introduction}
+% \section{Different Scenarios}
+
+% % \input{chapters/09_ModelArchitectures.tex}
+% \chapter{Model Architectures}
+% \section{Introduction}
+
+% \section{Noise Estimator}
+% \section{Optuna for Architecture Search}
+% \section{Advantages and Disadvantages of Models}
+
+% % \input{chapters/10_Evaluation.tex}
+% \chapter{Evaluation}
+% \section{Evaluation Metrics}
+% \section{Testing}
+% \section{Results \& Performance Comparison}
+% \section{Computational Complexity}
+
+% % \input{chapters/11_Conclusion.tex}
+% \chapter{Conclusion and Outlook}
+% \section{Summary}
+% \section{Challenges and Limitations}
+% \section{Outlook and Future Work}
+% \input{chapters/0X_Example.tex}
+%--------------------------------------------
+%| APPENDIX                                 |
+%--------------------------------------------
+\appendix
+\input{appendices/E_Appendix.tex}
+% ... (include your appendices here)
+
+%--------------------------------------------
+%| LIST OF FIGURES, ETC...                  |
+%--------------------------------------------
+\listoffigures
+\listoftables
+%\lstlistoflistings
+
+%--------------------------------------------
+%| ABBREVIATIONS, BIBLIOGRAPHY              |
+%--------------------------------------------
+\input{Bibliography.tex}
+
+%--------------------------------------------
+%| BACK COVER                                  |lis
+%--------------------------------------------
+% \input{chapters/Z_BackCover.tex}
+
+\end{document}
+

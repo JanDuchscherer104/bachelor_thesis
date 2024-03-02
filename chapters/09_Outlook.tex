@@ -1,0 +1,98 @@
+\chapter{Outlook}
+\label{ch:outlook}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\textbf{Multi path propagation:} Can eigenvalue based methods even deal with coherent signals?\\
+
+
+\section{Sub Array Sampling}
+
+
+- SSR Sparse Signal Representation\\
+- GLS Generalized Least Squares\\
+
+\subsection{Maximum Likelihood Estimation}
+
+
+\subsubsection{Deterministic Maximum Likelihood}
+\begin{itemize}
+    \item assumes a deterministic data model.
+    \item maximizes the likelihood of the observed signal given the deterministic model parameters.
+\end{itemize}
+Since in general \( \bfm{A}(\bfT) \) does not have full column rank for \( N \ge M \) , there is a manifold of solutions for \( \bfT \) and \( s[n] \) that
+give the same distribution for \( x[n] \), i.e., \( \bfT \) cannot be uniquely
+estimated with the DML model [26].
+
+\subsubsection{Stochastic Maximum Likelihood:}
+\begin{itemize}
+    \item SML assumes \( s(t) \sim V\mathcal{N}(0,\bfm{C}_S) \),V is denoted as C in the paper!, s narrow-band transmit signal
+    \item requires covariance matrix matching instead of likelihood maximization
+\end{itemize}
+
+\begin{equation}
+\bfm{C}_{\boldsymbol{x}}^{(l)}=\boldsymbol{G}^{(l)} \boldsymbol{A}(\bfT) \boldsymbol{C}_{\boldsymbol{s}} \boldsymbol{A}^{\mathrm{H}}(\bfT) \boldsymbol{G}^{(l), \mathrm{T}}+\sigma_\eta^2 \bfm{I}_M
+\end{equation}
+
+
+\begin{equation}
+\hat{\boldsymbol{R}}_{\boldsymbol{y}}^{(k)}=\frac{1}{N} \sum_{n=1}^N \boldsymbol{y}^{(k)}(n) \boldsymbol{y}^{(k), \mathrm{H}}(n)
+\label{eq:sub_sample_covariance}
+\end{equation}
+
+\subsection{Generalized Least Squares Estimation}
+\begin{itemize}
+    \item Uses a covariance matrix matching criterion.
+    \item Works together with \textbf{S}parse \textbf{S}ignal \textbf{R}epresentation
+\end{itemize}
+
+\begin{equation}
+    \min _{\boldsymbol{\theta}, \boldsymbol{R}_{\boldsymbol{s}} \geq \bfm{0}, \sigma_\eta^2 \geq 0} \sum_{k=1}^K\left\|\boldsymbol{T}^{(k)}\left(\hat{\boldsymbol{R}}_{\boldsymbol{y}}^{(k)}-\boldsymbol{R}_{\boldsymbol{y}}^{(k)}\right) \boldsymbol{T}^{(k), \mathrm{H}}\right\|_{\mathrm{F}}^2
+\end{equation}
+\( T^{(k)} \) is a whitening filter. \( T^{(k)} \approx \left(\boldsymbol{R}_{\boldsymbol{y}}^{(k)}\right)^{-1 / 2} \)\\
+
+\subsection{Sparse Signal Representation Estimation}
+\begin{itemize}
+    \item Uses a sparse signal representation criterion - phase offsets between the subarrays are not estimated.
+    \item Covariance matching
+    \item SSR methods can handle coherent and incoherent signals
+    \item SSR have been shown to outperform traditional estimators with less computational cost
+\end{itemize}
+
+
+\section{Model Order Estimation}
+In the fully sampled case, the likelihood function can be reparameterized by the eigenvalues of the sample covariance
+matrix. This leads to a very convenient expression for the value of the likelihood function that depends only on these
+eigenvalues and no longer on the DoA estimates for each considered model order [39]. Therefore, the computational load
+is basically reduced to an eigenvalue decomposition in contrast to evaluating ML estimates for very high model orders up
+to \( N_{\max} \). Unfortunately, this reparameterization%
+\footnote{Replacing ML estimation with eigenvalue decomposition and application on criterion based on the eigenvalues, AIC \& MDL are derived from ML estimation.}
+is no longer available when we consider systems with subsampling.
+This is made visible by looking at eigendecompositions of the sample covariances \( \Csub \), where the true model order \( N \) is larger
+than the number of RF chains \( L \). Here, the eigenspace can no longer be decomposed into a signal and noise subspace.\\
+
+Instead, we can replace the ML estimates of the model parameters in (22) by the GLS estimates, as has been proposed in [23].
+Applying the same rational, the SSR estimator or any hybrid version can be used to evaluate the IC.
+
+\section{Data Driven Approach}
+\begin{enumerate}
+ \item Pass the sample covariance matrices to the NN \autoref{eq:sub_sample_covariance}. How to encode \( k \)? \( \implies \) Transformer / Attention.
+
+ \item
+\end{enumerate}
+
+
+\subsection{Deep Learning Models}
+
+
+\subsection{Other}
+- In [22], it is shown that in the fully sampled case a NN-based model order selection approach can outperform classical
+IC in exactly this region, while simultaneously performing equally for high SNR and many snapshots. Therefore, we follow
+the lines of [22] and discuss a similar NN, to which we refer to as CovNet, for model order selection for systems with subsampling.
+
+\subsection{Inclusion of Real World Data}
+- build an auxiliary network to learn a mapping from MUSICs quality metric, spectrum, number of snapshots, covariance matrix, eigenvalues,
+predicted model order, eigenvectors, measurement vector, calibrated array manifold to predict the model order but also
+DOA estimates.\\
+Train that auxiliary network, then inference the model on real-world data.
