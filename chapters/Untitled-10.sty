@@ -1,0 +1,32 @@
+\chapter{Evaluation and Results}
+\label{ch:evaluation_results}
+
+\section{Introduction}
+This chapter presents a detailed comparative analysis of various model order estimation methods,
+including both traditional statistical criteria and contemporary deep learning models.
+The evaluations predominantly utilize the \( \DMain_{(\text{test})} \) dataset, as delineated in \autoref{ch:dataset_generation}.
+The effect of varying the number of snapshots \( K \) on performance is also scrutinized in \autoref{sec:influence_num_snapshots}.
+
+\section{Global Evaluation Metrics}
+For an initial comparative analysis, we consider the aggregated metrics of accuracy, root mean squared errors (RMSE), biases, and variances for each estimator.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{figures/07_Evaluation/global_metrics_acc,bias,var.png}
+    \caption{Aggregated accuracy, bias, and variance for each model order estimation method.}
+    \label{fig:global_metrics}
+\end{figure}
+
+\autoref{fig:global_metrics} graphically summarizes the performance of each method, illustrating the superior accuracy and
+lower bias of deep learning approaches (LSTM, RNN, CNN, MLP) over traditional information criteria (AIC, MDL).
+The Extended Feature Test (EFT) demonstrates an intermediate performance, outpacing traditional methods while trailing
+behind deep learning models.
+The thin black lines on the bars represent the 95\% confidence intervals for the metrics, offering insights into the precision and reliability of each method's performance.
+
+Notably, the higher variance associated with the MLP model suggests a propensity towards overfitting, which merits further investigation. In contrast, the traditional AIC and MDL criteria exhibit higher errors and biases, which may indicate systematic inaccuracies in their estimation capabilities.
+
+The deep learning models' robustness, reflected in their consistent accuracy and lower variance, underscores their suitability for complex model order estimation tasks. This comprehensive analysis not only confirms the viability of these advanced models but also encourages further exploration into their optimization and application in practical scenarios.
+
+Given the empirical evidence, the classification approach via deep learning models emerges as the more effective strategy for model order estimation, striking a balance between theoretical soundness and empirical robustness.
+
+The subsequent sections delve deeper into each method's individual performance, the implications of these findings for practical deployment, and potential avenues for future research and optimization.

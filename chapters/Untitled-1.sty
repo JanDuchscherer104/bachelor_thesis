@@ -1,0 +1,49 @@
+\textbf{Sub-Sampling:}
+
+The application of classical information criteria such as \gls{aic} and \gls{mdl} in model order estimation is critically
+dependent on the reparameterization of the likelihood function. While this approach is theoretically robust for coherently
+sampled covariance matrices \( \C \) as shown in \autoref{eq:max_likelihood},
+it encounters substantial challenges in the context of sub-sampled covariance matrices.
+
+A primary issue in sub-sampled systems is the degradation in the quality of fit for the estimated covariance matrix \( \Csub \).
+Although \( \Csub \rightarrow \bfm{C}_x \) as \( K \rightarrow \infty \)~\cite{meyer}, this convergence occurs asymptotically,
+and at a slow rate, such that this property is not practically useful. The sub-sampled covariance matrix \( \Csub \)
+tends to lose its positive semi-definiteness~\cite{bathelme21sub}, resulting in the emergence of negative eigenvalues and
+a broader spread of the noise eigenvalues~\cite{meyer}.
+
+
+
+The conventional method of substituting maximum likelihood estimation with
+eigenvalue decomposition, and basing criteria on these eigenvalues, becomes theoretically unsound.
+This problem is particularly acute when the true model order \( N \) exceeds the number of RF chains \( L \), leading to
+the inability to distinctly partition the eigenspace of the sub-sampled covariance matrices \( \Csub \) into signal and
+noise subspaces~\cite{barthelme21sub}.
+
+<revise: this should be first, since the abovementioned problem arises since the goodness of fit of the covariance matrix is guaranteed, and the matrix looses it's positive semi-definite property.>
+Further complicating this scenario is the degradation in the quality of fit for the estimated covariance matrix when
+using sub-sampled matrices. The sub-sampled covariance matrix \( C_{\text{sub}} \) often loses its positive semi-definite
+property, resulting in the emergence of negative eigenvalues and a broader spread of noise eigenvalues~\cite{meyer}.
+Although, \( C_sub \rightarrow \bfm{C_x} \) <revise: for K -> inf, add this to the previouse \( \),
+
+To make the classical methods applicable under these conditions, it is necessary to transform the eigenvalues so that
+the resulting vector \( \bfL \) contains only non-negative values. The current practice involves taking the absolute
+values of the eigenvalues and rearranging them in descending order. However, this technique compromises the intrinsic
+structure of the eigenvalues, which is crucial for accurate model order estimation.
+An alternative approach might involve shifting all eigenvalues upward by the value of the smallest eigenvalue, if it is
+negative, as shown in \( \bfL' = \bfL + |\min(\bfL)| \). Yet, it remains unclear how representative the adjusted vector
+\( \bfL \), especially with its negative eigenvalues, is of the underlying subspace \( \bfm{U} \).
+
+These challenges underscore a significant limitation in the reliability and accuracy of traditional model order estimation
+techniques in scenarios with sub-sampled data, necessitating further research and development of more robust methods.
+
+
+\textbf{Challenges of Sub-Sampling in Model Order Estimation:}
+
+In the realm of model order estimation using classical information criteria such as \gls{aic} and \gls{mdl}, the reparameterization of the likelihood function is fundamental. While effective for coherently sampled covariance matrices \( \C \), as delineated in \autoref{eq:max_likelihood}, this method encounters significant hurdles in the context of sub-sampled covariance matrices.
+
+A primary issue in sub-sampled systems is the degradation in the quality of fit for the estimated covariance matrix. The sub-sampled covariance matrix \( C_{\text{sub}} \) often loses its positive semi-definite property, a condition that leads to the emergence of negative eigenvalues and an increased spread of noise eigenvalues~\cite{meyer}. This loss of positive semi-definiteness is not just a theoretical concern but has practical implications in the applicability of \gls{aic} and \gls{mdl} in such scenarios. Moreover, as the number of samples \( K \) approaches infinity, \( C_{\text{sub}} \) tends to converge to the true covariance matrix \( \bfm{C_x} \).
+
+When the true model order \( N \) exceeds the number of RF chains \( L \), the traditional method of replacing maximum
+likelihood estimation with eigenvalue decomposition, and basing criteria on these eigenvalues, becomes theoretically unsound. This limitation is especially pronounced in sub-sampled systems, as it impedes the clear partitioning of the eigenspace of \( \Csub \) into signal and noise subspaces~\cite{barthelme21sub}.
+
+These challenges highlight significant limitations in the reliability and effectiveness of traditional model order estimation techniques like \gls{aic} and \gls{mdl} in scenarios involving sub-sampled data. The loss of the positive semi-definite property of the covariance matrix and the theoretical unsoundness of eigenvalue-based methods in such cases call for further exploration and development of more robust techniques.
